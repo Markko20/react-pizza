@@ -1,7 +1,7 @@
 
 function Cart () {
   return (
-    <h1>dsaf</h1>
+    <h1>Корзина</h1>
   )
 }
 
