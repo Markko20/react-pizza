@@ -2,19 +2,25 @@ import Skeleton from '../components/PizzaBlock/Skeleton'
 import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort';
 import Categories from '../components/Categories';
-import React from 'react'
+import React, { useContext } from 'react'
 import axios from 'axios';
 import Pagination from '../components/Pagination';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
+import { searchContext } from '../App';
 
-function Home({searchValue}) {
+function Home() {
+  const {searchValue} = useContext(searchContext)
+  const dispatch = useDispatch()
   const [pizzas, setPizzas] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
-
-  const [categoryId, setCategoryId] = React.useState(0)
   const [currentPage, setCurrentPage] = React.useState(1)
-  const [sort, setSort] = React.useState({
-    name: 'популярности 🠕', sortProperty:'rating'
-  })
+  const categoryId = useSelector((state) => state.filterSlice.categoryId)
+  const sort = useSelector(state => state.filterSlice.sort.sortProperty)
+
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id))
+  }
 
   const items = pizzas
     .filter((obj) => {
@@ -29,8 +35,8 @@ function Home({searchValue}) {
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
-    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
-    const sortBy = sort.sortProperty.replace('-', '')
+    const order = sort.includes('-') ? 'asc' : 'desc'
+    const sortBy = sort.replace('-', '')
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     
 
@@ -53,12 +59,12 @@ function Home({searchValue}) {
     <div className="content">
       <div className="container">
         <div className="content__top">
-          <Categories value={categoryId} onChangeCategory={(id) => setCategoryId(id)} />
-          <Sort value={sort} onChangeSort={(id) => setSort(id)} />
+          <Categories value={categoryId} onChangeCategory={onChangeCategory} />
+          <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">{isLoading ? skeletons : items}</div>
-        <Pagination onChangePage = {number => setCurrentPage(number)}/>
+        <Pagination onChangePage={(number) => setCurrentPage(number)} />
       </div>
     </div>
   );
