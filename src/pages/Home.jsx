@@ -6,20 +6,26 @@ import React, { useContext } from 'react'
 import axios from 'axios';
 import Pagination from '../components/Pagination';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import { searchContext } from '../App';
+import qs from 'qs'
+
 
 function Home() {
   const {searchValue} = useContext(searchContext)
   const dispatch = useDispatch()
   const [pizzas, setPizzas] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
-  const [currentPage, setCurrentPage] = React.useState(1)
   const categoryId = useSelector((state) => state.filterSlice.categoryId)
   const sort = useSelector(state => state.filterSlice.sort.sortProperty)
+  const currentPage = useSelector(state => state.filterSlice.currentPage)
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
+  }
+
+  const onChangePage = number => {
+    dispatch(setCurrentPage(number))
   }
 
   const items = pizzas
@@ -31,6 +37,7 @@ function Home() {
       return false;
     })
     .map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />)
 
   React.useEffect(() => {
@@ -39,7 +46,6 @@ function Home() {
     const sortBy = sort.replace('-', '')
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     
-
     async function fetchData(){
       setIsLoading(true);
 
@@ -55,6 +61,16 @@ function Home() {
     fetchData()
   }, [categoryId, sort, currentPage])
 
+  React.useEffect(() => {
+    const querryString = qs.stringify({
+      sort: sort,
+      categoryId: categoryId,
+      currentPage: currentPage
+    })
+    console.log(querryString)
+  },[categoryId, sort, currentPage])
+
+
   return (
     <div className="content">
       <div className="container">
@@ -64,7 +80,7 @@ function Home() {
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">{isLoading ? skeletons : items}</div>
-        <Pagination onChangePage={(number) => setCurrentPage(number)} />
+        <Pagination currentPage = {currentPage} onChangePage={onChangePage} />
       </div>
     </div>
   );
