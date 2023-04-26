@@ -6,13 +6,14 @@ export const fetchPizzas = createAsyncThunk('pizza/fetchPizzasStatus', async (pa
   const { data } = await axios.get(
     `https://643da3786c30feced8172a1b.mockapi.io/pizzas?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}`,
   );
+
   return data;
 });
 
 
 const initialState = {
   items: [],
-  status: 'loading', //loading || erorr || success
+  status: 'loading', //loading | erorr | success
 };
 
 const pizzaSlice = createSlice({

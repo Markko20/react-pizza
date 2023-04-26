@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setSort } from '../redux/slices/filterSlice'
+import { selectSort, setSort } from '../redux/slices/filterSlice'
 
 function Sort(){
   const dispatch = useDispatch()
-  const sort = useSelector(state => state.filterSlice.sort)
+  const sort = useSelector(selectSort)
   const sortRef = React.useRef()
 
   const [isVisiable, setIsVisiable] = React.useState(false)

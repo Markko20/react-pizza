@@ -1,15 +1,16 @@
 import pizzaLogo from '../assets/img/pizza-logo.svg'
 import { Link } from 'react-router-dom';
 import Search from './Search';
-import { searchContext } from '../App';
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { selectCart } from '../redux/slices/cartSlice';
+import { setSearchValue } from '../redux/slices/filterSlice';
 
 function Header() {
-  const {items, totalPrice} = useSelector(state => state.cart)
+  const {items, totalPrice} = useSelector(selectCart)
+  const {searchValue} = useSelector((state) => state.filterSlice.searchValue)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
-  const {setSearchValue, searchValue} = React.useContext(searchContext)
   return (
     <div className="header">
       <div className="container">
