@@ -7,6 +7,7 @@ import Pagination from '../components/Pagination';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const dispatch = useDispatch()
@@ -31,7 +32,11 @@ function Home() {
 
       return false;
     })
-    .map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+    .map((obj) => (
+      <Link key={obj.id} to={`/pizza/${obj.id}`}>
+        <PizzaBlock  {...obj} />
+      </Link>
+    ));
 
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />)
 
