@@ -355,6 +355,7 @@ body {
     h2 {
       font-size: 32px;
       margin-bottom: 10px;
+      font-weight: 700;
     }
 
     p {
@@ -387,6 +388,9 @@ body {
 
 
 .cart__bottom-buttons .go-back-btn{
+  span {
+    color: #d3d3d3;
+  }
   :hover{
     color: #fff;
   }

@@ -8,8 +8,6 @@ import Pagination from '../components/Pagination';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import { searchContext } from '../App';
-import qs from 'qs'
-
 
 function Home() {
   const {searchValue} = useContext(searchContext)
@@ -60,16 +58,6 @@ function Home() {
 
     fetchData()
   }, [categoryId, sort, currentPage])
-
-  React.useEffect(() => {
-    const querryString = qs.stringify({
-      sort: sort,
-      categoryId: categoryId,
-      currentPage: currentPage
-    })
-    console.log(querryString)
-  },[categoryId, sort, currentPage])
-
 
   return (
     <div className="content">
