@@ -415,3 +415,46 @@ body {
 .container--cart{
   padding-bottom: 100px;
 }
+
+
+.fullPizza{
+  &-wrapper{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-img{
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+  }
+
+  &-info{
+    width: 700px;
+    width: 500px;
+  }
+
+  &-title{
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+
+  &-subtitle{
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+
+  &-block__selector{
+    width: 400px;
+    margin-bottom: 30px;
+  }
+}
+
+.fullpizza-price{
+  font-size: 20px;
+  margin-bottom: 30px;
+}
