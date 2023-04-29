@@ -8,8 +8,9 @@ import { setSearchValue } from '../redux/slices/filterSlice';
 
 function Header() {
   const {items, totalPrice} = useSelector(selectCart)
-  const {searchValue} = useSelector((state) => state.filterSlice.searchValue)
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+  const {searchValue} = useSelector((state: any) => state.filterSlice.searchValue)
+
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
   const {pathname} = useLocation()
   return (
     <div className="header">
@@ -24,7 +25,7 @@ function Header() {
 
         {pathname !== '/cart' && (
           <>
-            <Search setSearchValue={setSearchValue} searchValue={searchValue} />
+            <Search setSearchValue = {setSearchValue} searchValue={searchValue} />
 
             <div className="header__cart">
               <Link to="/cart" className="button button--cart">

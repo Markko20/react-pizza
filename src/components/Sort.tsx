@@ -6,9 +6,17 @@ function Sort(){
   const dispatch = useDispatch()
   const sort = useSelector(selectSort)
   const sortRef = React.useRef()
-
   const [isVisiable, setIsVisiable] = React.useState(false)
-  const list = [
+
+  type SortItem = {
+    name: string;
+    sortProperty: string;
+  } 
+
+  const list: {
+    name: string;
+    sortProperty: string;
+  }[] = [
     { name: 'популярности 🠕', sortProperty:'-rating' },
     { name: 'популярности 🠗', sortProperty:'rating' },
     { name: 'цене 🠕', sortProperty:'-price' },

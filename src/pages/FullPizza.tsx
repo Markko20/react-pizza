@@ -13,13 +13,13 @@ const FullPizza: React.FC = () => {
     price: number;
     sizes: [];
     types: [];
-  }> ();
+  }>();
 
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-  const typeNames = ["Тонкое", "Традиционное"]
+  const typeNames = ["Тонкое", "Традиционное"];
   const cartitem = useSelector(selectCartItemById(id));
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onClickAdd = () => {
     const item = {
@@ -31,17 +31,19 @@ const FullPizza: React.FC = () => {
       size: pizza?.sizes[activeSize],
     };
     dispatch(addItem(item));
-  };;
+  };
 
   React.useEffect(() => {
     const fethData = async () => {
       try {
-        const { data } = await axios.get(`https://643da3786c30feced8172a1b.mockapi.io/pizzas/${id}`);
+        const { data } = await axios.get(
+          `https://643da3786c30feced8172a1b.mockapi.io/pizzas/${id}`
+        );
         setPizza(data);
       } catch (error) {
-        alert('Ошибка загрузки пиццы');
+        alert("Ошибка загрузки пиццы");
         console.error(error);
-        navigate('/');
+        navigate("/");
       }
     };
 
@@ -50,7 +52,18 @@ const FullPizza: React.FC = () => {
   }, []);
 
   if (!pizza) {
-    return <>Загрузка...</>;
+    return (
+      <div className="loading-wrapper">
+        <div className="loading">
+          <div className="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
