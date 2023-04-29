@@ -57,6 +57,7 @@ function Home() {
 
     fetchData()
     window.scrollTo(0, 0)
+    // eslint-disable-next-line
   }, [categoryId, sort, currentPage])
 
   return (

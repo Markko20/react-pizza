@@ -1,12 +1,20 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { addItem, selectCartItemById } from "../redux/slices/cartSlice";
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = React.useState({});
+  const navigate = useNavigate();
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+    sizes: [];
+    types: [];
+  }> ();
+
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ["Тонкое", "Традиционное"]
@@ -16,33 +24,33 @@ const FullPizza = () => {
   const onClickAdd = () => {
     const item = {
       id,
-      title: pizza.title,
-      price: pizza.price,
-      imageUrl: pizza.imageUrl,
+      title: pizza?.title,
+      price: pizza?.price,
+      imageUrl: pizza?.imageUrl,
       type: typeNames[activeType],
-      size: pizza.sizes[activeSize],
+      size: pizza?.sizes[activeSize],
     };
     dispatch(addItem(item));
   };;
 
   React.useEffect(() => {
-    try {
-      const fethData = async () => {
-        const { data } = await axios.get(
-          `https://643da3786c30feced8172a1b.mockapi.io/pizzas/${id}`
-        );
+    const fethData = async () => {
+      try {
+        const { data } = await axios.get(`https://643da3786c30feced8172a1b.mockapi.io/pizzas/${id}`);
         setPizza(data);
-      };
+      } catch (error) {
+        alert('Ошибка загрузки пиццы');
+        console.error(error);
+        navigate('/');
+      }
+    };
 
-      fethData();
-    } catch (error) {
-      alert("Ошибка загрузки пиццы");
-      console.error(error);
-    }
+    fethData();
+    // eslint-disable-next-line
   }, []);
 
   if (!pizza) {
-    return "Загрузка...";
+    return <>Загрузка...</>;
   }
 
   return (
