@@ -5,7 +5,8 @@ import { selectSort, setSort } from '../redux/slices/filterSlice'
 function Sort(){
   const dispatch = useDispatch()
   const sort = useSelector(selectSort)
-  const sortRef = React.useRef()
+  const sortRef = React.useRef<HTMLDivElement>(null)
+
   const [isVisiable, setIsVisiable] = React.useState(false)
 
   type SortItem = {
@@ -13,10 +14,7 @@ function Sort(){
     sortProperty: string;
   } 
 
-  const list: {
-    name: string;
-    sortProperty: string;
-  }[] = [
+  const list: SortItem[] = [
     { name: 'популярности 🠕', sortProperty:'-rating' },
     { name: 'популярности 🠗', sortProperty:'rating' },
     { name: 'цене 🠕', sortProperty:'-price' },
@@ -25,13 +23,13 @@ function Sort(){
     { name: 'алфавиту 🠗', sortProperty:'title' }
   ]
 
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: SortItem) => {
     dispatch(setSort(obj))
     setIsVisiable(false)
   }
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)){
         setIsVisiable(false)
       }

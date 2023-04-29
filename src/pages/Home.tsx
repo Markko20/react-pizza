@@ -8,30 +8,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
-function Home() {
+const Home:React.FC = () => {
   const dispatch = useDispatch()
-  const {categoryId, currentPage, searchValue} = useSelector(state => state.filterSlice)
-  const sort = useSelector(state => state.filterSlice.sort.sortProperty)
-  const pizzas = useSelector(state => state.pizza.items)
-  const status = useSelector(state => state.pizza.status)
+  const {categoryId, currentPage, searchValue} = useSelector((state: any) => state.filterSlice)
+  const sort = useSelector((state: any) => state.filterSlice.sort.sortProperty)
+  const pizzas = useSelector((state: any) => state.pizza.items)
+  const status = useSelector((state: any) => state.pizza.status)
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id))
   }
 
-  const onChangePage = number => {
-    dispatch(setCurrentPage(number))
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page))
   }
 
   const items = pizzas
-    .filter((obj) => {
+    .filter((obj: any) => {
       if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
 
       return false;
     })
-    .map((obj) => (
+    .map((obj: any) => (
         <PizzaBlock key={obj.id} {...obj} />
     ));
 
@@ -45,6 +45,7 @@ function Home() {
     async function fetchData(){
       
       dispatch(
+        // @ts-ignore
         fetchPizzas({
           order,
           sortBy,
@@ -71,7 +72,7 @@ function Home() {
         {status === 'error' ? (
           <div className='content__error-info'>
             <h2>
-              Произошла ошибка <icon>😕</icon>
+              Произошла ошибка 😕
             </h2>
             <p>
               К сожалению, не удалось загрузить пиццы. Попробуйте повторить попытку позже

@@ -1,7 +1,8 @@
 import styles from './NotFoundBlock.module.scss'
 import { Link } from 'react-router-dom'
+import React from 'react';
 
-function NotFoundBlock() {
+const NotFoundBlock:React.FC = () => {
   return (
     <div className={styles.root}>
       <h1 >

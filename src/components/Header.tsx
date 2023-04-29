@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 import { setSearchValue } from '../redux/slices/filterSlice';
 
-function Header() {
+const Header: React.FC = () => {
   const {items, totalPrice} = useSelector(selectCart)
   const {searchValue} = useSelector((state: any) => state.filterSlice.searchValue)
 
@@ -25,7 +25,7 @@ function Header() {
 
         {pathname !== '/cart' && (
           <>
-            <Search setSearchValue = {setSearchValue} searchValue={searchValue} />
+            {/* <Search setSearchValue = {setSearchValue} searchValue={searchValue} /> */}
 
             <div className="header__cart">
               <Link to="/cart" className="button button--cart">
