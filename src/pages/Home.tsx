@@ -4,13 +4,14 @@ import Sort from '../components/Sort';
 import Categories from '../components/Categories';
 import React from 'react'
 import Pagination from '../components/Pagination';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { RootState, useAppDispatch } from '../redux/store';
 
 const Home:React.FC = () => {
-  const dispatch = useDispatch()
-  const {categoryId, currentPage, searchValue} = useSelector((state: any) => state.filterSlice)
+  const dispatch = useAppDispatch()
+  const {categoryId, currentPage, searchValue} = useSelector((state: RootState) => state.filterSlice)
   const sort = useSelector((state: any) => state.filterSlice.sort.sortProperty)
   const pizzas = useSelector((state: any) => state.pizza.items)
   const status = useSelector((state: any) => state.pizza.status)
@@ -39,18 +40,17 @@ const Home:React.FC = () => {
 
   React.useEffect(() => {
     const order = sort.includes('-') ? 'asc' : 'desc'
-    const sortBy = sort.replace('-', '')
+    const sortBy: string = sort.replace('-', '')
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     
     async function fetchData(){
       
       dispatch(
-        // @ts-ignore
         fetchPizzas({
           order,
           sortBy,
           category,
-          currentPage
+          currentPage: String(currentPage)
         }),
       );
 

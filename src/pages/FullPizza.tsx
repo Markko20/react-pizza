@@ -4,10 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { addItem, selectCartItemById } from "../redux/slices/cartSlice";
 
+type onClickAdd = {
+  id: string;
+  title: string;
+  price: number;
+  count: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+};
+
 const FullPizza: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [pizza, setPizza] = React.useState<{
+    id:string;
     imageUrl: string;
     title: string;
     price: number;
@@ -22,15 +33,19 @@ const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
 
   const onClickAdd = () => {
-    const item = {
-      id,
-      title: pizza?.title,
-      price: pizza?.price,
-      imageUrl: pizza?.imageUrl,
-      type: typeNames[activeType],
-      size: pizza?.sizes[activeSize],
-    };
-    dispatch(addItem(item));
+    if(pizza && id){
+      const item: onClickAdd = {
+        id,
+        title: pizza?.title,
+        price: pizza?.price,
+        imageUrl: pizza?.imageUrl,
+        type: typeNames[activeType],
+        size: pizza?.sizes[activeSize],
+        count: 0,
+      };
+      dispatch(addItem(item));
+    }
+    
   };
 
   React.useEffect(() => {
@@ -125,7 +140,7 @@ const FullPizza: React.FC = () => {
               />
             </svg>
             <span>Добавить</span>
-            {(cartitem ? cartitem.count : 0) > 0 && <i>{cartitem.count}</i>}
+            {cartitem && (cartitem ? cartitem.count : 0) > 0 && <i>{cartitem.count}</i>}
           </button>
         </div>
       </div>

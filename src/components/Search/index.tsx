@@ -10,8 +10,8 @@ const Search: React.FC = () => {
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const onClickClear = () => {
-    dispatch(setSearchValue(value))
     setValue('')
+    dispatch(setSearchValue(''))
     inputRef.current?.focus()
   }
   
@@ -20,9 +20,9 @@ const Search: React.FC = () => {
   //     dispatch(setSearchValue(str))
   //   }, 150), []
   // )
-
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
+    dispatch(setSearchValue(event.target.value))
     // updateSearcValue(event.target.value)
   }
 
