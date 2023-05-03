@@ -240,6 +240,26 @@ body {
             display: none;
           }
         }
+
+        &:disabled{
+          border-color: #777777;
+          opacity: .4;
+          cursor:initial;
+
+          :active{
+            transform: none;
+          }
+
+          &:hover{
+            background-color: transparent;
+          }
+
+          svg{
+            path{
+              fill: #777777
+            }
+          }
+        }
       }
 
       b {
